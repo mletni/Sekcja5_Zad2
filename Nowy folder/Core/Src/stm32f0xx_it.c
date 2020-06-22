@@ -67,16 +67,16 @@ uint8_t sing_table[] = {
 
 };
 uint8_t element = 0;
-uint8_t size_of_msg = sizeof(msg_t)/sizeof(msg_t[0]);
+uint8_t size_of_msg = sizeof(sing_table)/sizeof(sing_table[0]);
 int8_t counter = -1;
-int8_t my_delay = 0;
-int8_t current_delay = 300;
-int8_t dot = 300;
-int8_t dash = 900;
-int8_t ele_gap = 300;
-int8_t sign_gap = 900;
-int8_t word_gap = 2100;
-int8_t element_switcher = 1;
+uint32_t TimingDelay = 0;
+uint32_t current_delay = 300;
+uint32_t dot = 300;
+uint32_t dash = 900;
+uint32_t ele_gap = 300;
+uint32_t sign_gap = 900;
+uint32_t word_gap = 2100;
+uint32_t element_switcher = 1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -90,23 +90,23 @@ void morse(){
 	switch(element){
 	case 1:
 		element_switcher = 2;
-		my_delay = 0;
+		TimingDelay = 0;
 		current_delay = dot;
 		BSP_LED_On(LED_GREEN);
 		break;
 	case 2:
 		element_switcher = 2;
-		my_delay = 0;
+		TimingDelay = 0;
 		current_delay = dash;
 		BSP_LED_On(LED_GREEN);
 		break;
 	case 3:
-		my_delay = 0;
+		TimingDelay = 0;
 		current_delay = sign_gap;
 		BSP_LED_Off(LED_GREEN);
 		break;
 	case 4:
-		my_delay = 0;
+		TimingDelay = 0;
 		current_delay = word_gap;
 		BSP_LED_Off(LED_GREEN);
 		break;
@@ -120,12 +120,10 @@ void execute_message(){
 void execute_ele_gap()
 {
 	element_switcher = 1;
-	my_delay = 0;
+	TimingDelay = 0;
 	current_delay = ele_gap;
 	BSP_LED_Off(LED_GREEN);
 }
-
-uint32_t TimingDelay = 0;
 
 void TimingDelay_Increment(void)
 {
