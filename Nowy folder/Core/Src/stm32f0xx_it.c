@@ -70,11 +70,11 @@ uint8_t size_of_msg = sizeof(msg_t)/sizeof(msg_t[0]);
 int8_t counter = -1;
 int8_t my_delay = 0;
 int8_t current_delay = 0;
-int8_t dot = 100;
-int8_t dash = 300;
-int8_t ele_gap = 100;
-int8_t sign_gap = 300;
-int8_t word_gap = 700;
+int8_t dot = 300;
+int8_t dash = 900;
+int8_t ele_gap = 300;
+int8_t sign_gap = 900;
+int8_t word_gap = 2100;
 int8_t element_switcher = 1;
 /* USER CODE END PV */
 
