@@ -24,24 +24,24 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-Send_Morse_Code.elf \
+Sekcja5-lab2.2.elf \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-Send_Morse_Code.list \
+Sekcja5-lab2.2.list \
 
 OBJCOPY_BIN += \
-Send_Morse_Code.bin \
+Sekcja5-lab2.2.bin \
 
 
 # All Target
-all: Send_Morse_Code.elf secondary-outputs
+all: Sekcja5-lab2.2.elf secondary-outputs
 
 # Tool invocations
-Send_Morse_Code.elf: $(OBJS) $(USER_OBJS) C:\Users\kamis\Desktop\Send_Morse_Code\STM32F030R8TX_FLASH.ld
-	arm-none-eabi-gcc -o "Send_Morse_Code.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0 -T"C:\Users\kamis\Desktop\Send_Morse_Code\STM32F030R8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Send_Morse_Code.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Sekcja5-lab2.2.elf: $(OBJS) $(USER_OBJS) C:\Project\Sekcja5_zad2\Nowy\ folder\STM32F030R8TX_FLASH.ld
+	arm-none-eabi-gcc -o "Sekcja5-lab2.2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0 -T"C:\Project\Sekcja5_zad2\Nowy folder\STM32F030R8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Sekcja5-lab2.2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -50,13 +50,13 @@ default.size.stdout: $(EXECUTABLES)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-Send_Morse_Code.list: $(EXECUTABLES)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "Send_Morse_Code.list"
+Sekcja5-lab2.2.list: $(EXECUTABLES)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "Sekcja5-lab2.2.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-Send_Morse_Code.bin: $(EXECUTABLES)
-	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "Send_Morse_Code.bin"
+Sekcja5-lab2.2.bin: $(EXECUTABLES)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "Sekcja5-lab2.2.bin"
 	@echo 'Finished building: $@'
 	@echo ' '
 

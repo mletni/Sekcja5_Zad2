@@ -73,11 +73,11 @@ uint8_t size_of_msg = sizeof(sign_table)/sizeof(sign_table[0]);
 int8_t counter = -1;
 uint32_t TimingDelay = 0;
 uint32_t current_delay = 0;
-uint32_t dot = 1000;
-uint32_t dash = 3000;
-uint32_t ele_gap = 1000;
-uint32_t sign_gap = 3000;
-uint32_t word_gap = 7000;
+uint32_t dot = 3000;
+uint32_t dash = 9000;
+uint32_t ele_gap = 3000;
+uint32_t sign_gap = 9000;
+uint32_t word_gap = 21000;
 uint32_t element_switcher = 1;
 /* USER CODE END PV */
 
