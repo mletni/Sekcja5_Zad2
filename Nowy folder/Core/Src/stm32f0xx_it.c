@@ -66,7 +66,7 @@ uint8_t sing_table[] = {
 		1,2,			/* a */
 
 };
-uint8_t zmienna = -1;
+int32_t zmienna = -1;
 uint8_t send = 0;
 uint8_t element = 0;
 uint8_t size_of_msg = sizeof(sing_table)/sizeof(sing_table[0]);
