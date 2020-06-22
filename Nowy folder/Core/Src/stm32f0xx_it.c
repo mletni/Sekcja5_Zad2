@@ -126,23 +126,6 @@ void execute_ele_gap()
 	BSP_LED_Off(LED_GREEN);
 }
 
-void TimingDelay_Increment(void)
-{
-    TimingDelay++;
-    if(TimingDelay>=current_delay){
-    	switch(element_switcher)
-    			{
-    			case(1):
-    				{
-    					execute_message();
-    				}
-    			case(2):
-    				{
-    					execute_ele_gap();
-    				}
-    			}
-    }
-}
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -216,7 +199,20 @@ void SysTick_Handler(void)
   /* USER CODE BEGIN SysTick_IRQn 0 */
    if(send == 1)
    {
-	TimingDelay_Increment();
+	   TimingDelay++;
+	       if(TimingDelay>=current_delay){
+	       	switch(element_switcher)
+	       			{
+	       			case(1):
+	       				{
+	       					execute_message();
+	       				}
+	       			case(2):
+	       				{
+	       					execute_ele_gap();
+	       				}
+	       			}
+	       }
    }
 
   /* USER CODE END SysTick_IRQn 0 */
