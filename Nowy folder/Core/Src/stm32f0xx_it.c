@@ -72,11 +72,11 @@ uint8_t size_of_msg = sizeof(sing_table)/sizeof(sing_table[0]);
 int8_t counter = -1;
 uint32_t TimingDelay = 0;
 uint32_t current_delay = 300;
-uint32_t dot = 300;
-uint32_t dash = 900;
-uint32_t ele_gap = 300;
-uint32_t sign_gap = 900;
-uint32_t word_gap = 2100;
+uint32_t dot = 1000;
+uint32_t dash = 3000;
+uint32_t ele_gap = 1000;
+uint32_t sign_gap = 3000;
+uint32_t word_gap = 7000;
 uint32_t element_switcher = 1;
 /* USER CODE END PV */
 
