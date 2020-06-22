@@ -43,7 +43,40 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
+uint8_t sing_table[] = {
+		1,1,1,1,3,		/* H */
+		1,2,3,			/* a */
+		1,2,1,1,3,		/* l */
+		2,2,2,			/* o */
+		4,				/*   */
+		2,3,			/* t */
+		1,1,2,			/* u */
+		4,				/*   */
+		1,1,1,3,		/* s */
+		1,3,			/* e */
+		2,1,2,3,		/* k */
+		2,1,2,1,3,		/* c */
+		1,2,2,2,3,		/* j */
+		1,2,			/* a */
+		4,				/*   */
+		1,2,2,1,3,		/* p */
+		1,1,3,			/* i */
+		1,2,1,2,3,		/* ą */
+		1,3,			/* t */
+		1,2,			/* a */
 
+};
+uint8_t element = 0;
+uint8_t size_of_msg = sizeof(sing_table)/sizeof(sing_table[0]);
+int8_t counter = -1;
+uint32_t TimingDelay = 0;
+uint32_t current_delay = 300;
+uint32_t dot = 300;
+uint32_t dash = 900;
+uint32_t ele_gap = 300;
+uint32_t sign_gap = 900;
+uint32_t word_gap = 2100;
+uint32_t element_switcher = 1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -53,18 +86,61 @@
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint32_t TimingDelay = 0;
-
-void TimingDelay_Decrement(void)
+void morse(){
+	switch(element){
+	case 1:
+		element_switcher = 2;
+		TimingDelay = 0;
+		current_delay = dot;
+		BSP_LED_On(LED_GREEN);
+		break;
+	case 2:
+		element_switcher = 2;
+		TimingDelay = 0;
+		current_delay = dash;
+		BSP_LED_On(LED_GREEN);
+		break;
+	case 3:
+		TimingDelay = 0;
+		current_delay = sign_gap;
+		BSP_LED_Off(LED_GREEN);
+		break;
+	case 4:
+		TimingDelay = 0;
+		current_delay = word_gap;
+		BSP_LED_Off(LED_GREEN);
+		break;
+	}
+}
+void execute_message(){
+		counter = counter + 1;
+		element = sing_table[counter];
+		morse();
+}
+void execute_ele_gap()
 {
-  if (TimingDelay != 0x00)
-  {
-    TimingDelay--;
-    if(TimingDelay-1==0x00){
-    	BSP_LED_Off(LED_GREEN);
-    	BSP_LED_Off(LED_BLUE);
+	element_switcher = 1;
+	TimingDelay = 0;
+	current_delay = ele_gap;
+	BSP_LED_Off(LED_GREEN);
+}
+
+void TimingDelay_Increment(void)
+{
+    TimingDelay++;
+    if(TimingDelay>=current_delay){
+    	switch(element_switcher)
+    			{
+    			case(1):
+    				{
+    					execute_message();
+    				}
+    			case(2):
+    				{
+    					execute_ele_gap();
+    				}
+    			}
     }
-  }
 }
 /* USER CODE END 0 */
 
@@ -137,7 +213,7 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-    TimingDelay_Decrement();
+    TimingDelay_Increment();
 
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
@@ -158,9 +234,9 @@ void SysTick_Handler(void)
 void EXTI0_1_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI0_1_IRQn 0 */
-	BSP_LED_On(LED_BLUE);
-	BSP_LED_On(LED_GREEN);
-	TimingDelay = 1001;
+	if(counter>=size_of_msg || counter < 0){
+		counter = -1;
+	}
   /* USER CODE END EXTI0_1_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
   /* USER CODE BEGIN EXTI0_1_IRQn 1 */
