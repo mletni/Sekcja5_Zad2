@@ -20,15 +20,14 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "stm32f0308_discovery.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "stm32f0308_discovery.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -43,7 +42,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -78,16 +76,15 @@ int main(void)
   /* USER CODE END Init */
 
   /* Configure the system clock */
-  SysTick_Config(SystemCoreClock / 1000);
+  SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  SysTick_Config((SystemCoreClock/1000));
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-  BSP_LED_Init(LED_BLUE);
   BSP_LED_Init(LED_GREEN);
   /* USER CODE END 2 */
 
