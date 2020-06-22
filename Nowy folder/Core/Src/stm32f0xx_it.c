@@ -21,17 +21,19 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f0xx_it.h"
+#include "stm32f0308_discovery.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stm32f0308_discovery.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
+
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+ 
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -41,7 +43,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-uint8_t msg_t[] = {
+uint8_t sing_table[] = {
 		1,1,1,1,3,		/* H */
 		1,2,3,			/* a */
 		1,2,1,1,3,		/* l */
@@ -64,12 +66,11 @@ uint8_t msg_t[] = {
 		1,2,			/* a */
 
 };
-uint8_t send = 0;
-uint8_t el = 0;
+uint8_t element = 0;
 uint8_t size_of_msg = sizeof(msg_t)/sizeof(msg_t[0]);
 int8_t counter = -1;
 int8_t my_delay = 0;
-int8_t current_delay = 0;
+int8_t current_delay = 300;
 int8_t dot = 300;
 int8_t dash = 900;
 int8_t ele_gap = 300;
@@ -85,9 +86,8 @@ int8_t element_switcher = 1;
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 void morse(){
-	switch(el){
+	switch(element){
 	case 1:
 		element_switcher = 2;
 		my_delay = 0;
@@ -112,9 +112,9 @@ void morse(){
 		break;
 	}
 }
-void send_message(){
+void execute_message(){
 		counter = counter + 1;
-		el = msg_t[counter];
+		element = sing_table[counter];
 		morse();
 }
 void execute_ele_gap()
@@ -124,11 +124,32 @@ void execute_ele_gap()
 	current_delay = ele_gap;
 	BSP_LED_Off(LED_GREEN);
 }
+
+uint32_t TimingDelay = 0;
+
+void TimingDelay_Increment(void)
+{
+    TimingDelay++;
+    if(TimingDelay==current_delay){
+    	switch(element_switcher)
+    			{
+    			case(1):
+    				{
+    					execute_message();
+    				}
+    			case(2):
+    				{
+    					execute_ele_gap();
+    				}
+    			}
+    }
+}
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
 
 /* USER CODE BEGIN EV */
+
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -194,26 +215,11 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-	my_delay++;
-	if(my_delay > current_delay){
-		switch(element_switcher)
-		{
-		case(1):
-			{
-				send_message();
-			}
-		case(2):
-			{
-				execute_ele_gap();
-			}
-		}
-	}
+    TimingDelay_Increment();
 
-	/*BSP_LED_Toggle(LED_GREEN);*/
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
-
   /* USER CODE END SysTick_IRQn 1 */
 }
 
@@ -233,7 +239,6 @@ void EXTI0_1_IRQHandler(void)
 	if(counter>=size_of_msg || counter < 0){
 		counter = -1;
 	}
-
   /* USER CODE END EXTI0_1_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
   /* USER CODE BEGIN EXTI0_1_IRQn 1 */
