@@ -1,1 +1,0 @@
-# Sekcja5_zad2
