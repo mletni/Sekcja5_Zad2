@@ -92,24 +92,20 @@ void morse(){
 	switch(element){
 	case 1:
 		element_switcher = 2;
-		TimingDelay = 0;
-		current_delay = dot;
+		current_delay = current_delay +dot;
 		BSP_LED_On(LED_GREEN);
 		break;
 	case 2:
 		element_switcher = 2;
-		TimingDelay = 0;
-		current_delay = dash;
+		current_delay = current_delay + dash;
 		BSP_LED_On(LED_GREEN);
 		break;
 	case 3:
-		TimingDelay = 0;
-		current_delay = sign_gap;
+		current_delay = current_delay + sign_gap;
 		BSP_LED_Off(LED_GREEN);
 		break;
 	case 4:
-		TimingDelay = 0;
-		current_delay = word_gap;
+		current_delay = current_delay + word_gap;
 		BSP_LED_Off(LED_GREEN);
 		break;
 	}
@@ -122,8 +118,7 @@ void execute_message(){
 void execute_ele_gap()
 {
 	element_switcher = 1;
-	TimingDelay = 0;
-	current_delay = ele_gap;
+	current_delay = current_delay + ele_gap;
 	BSP_LED_Off(LED_GREEN);
 }
 
@@ -237,6 +232,8 @@ void EXTI0_1_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI0_1_IRQn 0 */
 	if(counter>=size_of_msg || counter < 0){
+		current_delay = 0;
+		TimingDelay = 0;
 		counter = -1;
 		send = 1;
 	}
