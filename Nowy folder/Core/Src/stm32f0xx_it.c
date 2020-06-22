@@ -130,7 +130,7 @@ uint32_t TimingDelay = 0;
 void TimingDelay_Increment(void)
 {
     TimingDelay++;
-    if(TimingDelay==current_delay){
+    if(TimingDelay>=current_delay){
     	switch(element_switcher)
     			{
     			case(1):
