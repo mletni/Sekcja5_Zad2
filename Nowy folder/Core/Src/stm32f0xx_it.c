@@ -19,11 +19,12 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
 #include "main.h"
 #include "stm32f0xx_it.h"
 #include "stm32f0308_discovery.h"
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,7 +44,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-uint8_t sing_table[] = {
+uint8_t sign_table[] = {
 		1,1,1,1,3,		/* H */
 		1,2,3,			/* a */
 		1,2,1,1,3,		/* l */
@@ -66,10 +67,9 @@ uint8_t sing_table[] = {
 		1,2,			/* a */
 
 };
-int32_t zmienna = -1;
 uint8_t send = 0;
 uint8_t element = 0;
-uint8_t size_of_msg = sizeof(sing_table)/sizeof(sing_table[0]);
+uint8_t size_of_msg = sizeof(sign_table)/sizeof(sign_table[0]);
 int8_t counter = -1;
 uint32_t TimingDelay = 0;
 uint32_t current_delay = 0;
@@ -116,7 +116,7 @@ void morse(){
 }
 void execute_message(){
 		counter = counter + 1;
-		element = sing_table[counter];
+		element = sign_table[counter];
 		morse();
 }
 void execute_ele_gap()
@@ -198,7 +198,7 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-  /* if(send == 1)
+  if(send == 1)
    {
 	   TimingDelay++;
 	       if(TimingDelay>=current_delay){
@@ -214,16 +214,7 @@ void SysTick_Handler(void)
 	       				}
 	       			}
 	       }
-   }*/
-	if(zmienna >= 0)
-	{
-		zmienna++;
-		if (zmienna > 1000)
-		{
-			BSP_LED_Toggle(LED_GREEN);
-			zmienna = 0;
-		}
-	}
+   }
 
 
   /* USER CODE END SysTick_IRQn 0 */
@@ -248,7 +239,6 @@ void EXTI0_1_IRQHandler(void)
 	if(counter>=size_of_msg || counter < 0){
 		counter = -1;
 		send = 1;
-		zmienna = 0;
 	}
   /* USER CODE END EXTI0_1_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
