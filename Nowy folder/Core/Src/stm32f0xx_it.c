@@ -66,6 +66,7 @@ uint8_t sing_table[] = {
 		1,2,			/* a */
 
 };
+uint8_t send = 0;
 uint8_t element = 0;
 uint8_t size_of_msg = sizeof(sing_table)/sizeof(sing_table[0]);
 int8_t counter = -1;
@@ -213,7 +214,10 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-    TimingDelay_Increment();
+   if(send == 1)
+   {
+	TimingDelay_Increment();
+   }
 
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
@@ -236,6 +240,7 @@ void EXTI0_1_IRQHandler(void)
   /* USER CODE BEGIN EXTI0_1_IRQn 0 */
 	if(counter>=size_of_msg || counter < 0){
 		counter = -1;
+		send = 1;
 	}
   /* USER CODE END EXTI0_1_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
