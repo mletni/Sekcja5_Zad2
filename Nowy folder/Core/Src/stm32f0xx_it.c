@@ -66,12 +66,13 @@ uint8_t sing_table[] = {
 		1,2,			/* a */
 
 };
+uint8_t zmienna = -1;
 uint8_t send = 0;
 uint8_t element = 0;
 uint8_t size_of_msg = sizeof(sing_table)/sizeof(sing_table[0]);
 int8_t counter = -1;
 uint32_t TimingDelay = 0;
-uint32_t current_delay = 300;
+uint32_t current_delay = 0;
 uint32_t dot = 1000;
 uint32_t dash = 3000;
 uint32_t ele_gap = 1000;
@@ -197,7 +198,7 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-   if(send == 1)
+  /* if(send == 1)
    {
 	   TimingDelay++;
 	       if(TimingDelay>=current_delay){
@@ -213,7 +214,17 @@ void SysTick_Handler(void)
 	       				}
 	       			}
 	       }
-   }
+   }*/
+	if(zmienna >= 0)
+	{
+		zmienna++;
+		if (zmienna > 1000)
+		{
+			BSP_LED_Toggle(LED_GREEN);
+			zmienna = 0;
+		}
+	}
+
 
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
@@ -237,6 +248,7 @@ void EXTI0_1_IRQHandler(void)
 	if(counter>=size_of_msg || counter < 0){
 		counter = -1;
 		send = 1;
+		zmienna = 0;
 	}
   /* USER CODE END EXTI0_1_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
