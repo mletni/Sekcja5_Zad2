@@ -93,20 +93,24 @@ void morse(){
 	switch(element){
 	case 1:
 		element_switcher = 2;
-		current_delay = current_delay +dot;
+		TimingDelay = 0;
+		current_delay = dot;
 		BSP_LED_On(LED_GREEN);
 		break;
 	case 2:
 		element_switcher = 2;
-		current_delay = current_delay + dash;
+		TimingDelay = 0;
+		current_delay = dash;
 		BSP_LED_On(LED_GREEN);
 		break;
 	case 3:
-		current_delay = current_delay + sign_gap;
+		TimingDelay = 0;
+		current_delay = sign_gap;
 		BSP_LED_Off(LED_GREEN);
 		break;
-	case 4:
-		current_delay = current_delay + word_gap;
+	case 4:		
+		TimingDelay = 0;
+		current_delay = word_gap;
 		BSP_LED_Off(LED_GREEN);
 		break;
 	}
@@ -119,7 +123,8 @@ void execute_message(){
 void execute_ele_gap()
 {
 	element_switcher = 1;
-	current_delay = current_delay + ele_gap;
+	TimingDelay = 0;
+	current_delay = ele_gap;
 	BSP_LED_Off(LED_GREEN);
 	if(counter>=size_of_msg){
 		send = 0;
