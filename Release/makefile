@@ -40,8 +40,8 @@ Sekcja5_lab2.2.bin \
 all: Sekcja5_lab2.2.elf secondary-outputs
 
 # Tool invocations
-Sekcja5_lab2.2.elf: $(OBJS) $(USER_OBJS) C:\Users\mletn\STM32CubeIDE\workspace_1.3.0\Sekcja5_lab2.2\STM32F030R8TX_FLASH.ld
-	arm-none-eabi-gcc -o "Sekcja5_lab2.2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0 -T"C:\Users\mletn\STM32CubeIDE\workspace_1.3.0\Sekcja5_lab2.2\STM32F030R8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Sekcja5_lab2.2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Sekcja5_lab2.2.elf: $(OBJS) $(USER_OBJS) C:\Users\kamis\Desktop\Sekcja5_zad2\STM32F030R8TX_FLASH.ld
+	arm-none-eabi-gcc -o "Sekcja5_lab2.2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0 -T"C:\Users\kamis\Desktop\Sekcja5_zad2\STM32F030R8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Sekcja5_lab2.2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

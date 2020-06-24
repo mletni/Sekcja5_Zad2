@@ -68,17 +68,17 @@ uint8_t sign_table[] = {
 
 };
 uint8_t send = 0;
-uint8_t element = 0;
-uint8_t size_of_msg = sizeof(sign_table)/sizeof(sign_table[0]);
-int8_t counter = -1;
+uint32_t element = 0;
+uint32_t size_of_msg = sizeof(sign_table)/sizeof(sign_table[0]);
+int32_t counter = -1;
 uint32_t TimingDelay = 0;
 uint32_t current_delay = 0;
-uint32_t dot = 3000;
-uint32_t dash = 9000;
-uint32_t ele_gap = 3000;
-uint32_t sign_gap = 9000;
-uint32_t word_gap = 21000;
-uint32_t element_switcher = 1;
+uint32_t dot = 100;
+uint32_t dash = 3 * 100;
+uint32_t ele_gap = 100;
+uint32_t sign_gap = 3 * 100;
+uint32_t word_gap = 7 * 100;
+uint8_t element_switcher = 1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -194,22 +194,25 @@ void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
   if(send == 1)
-   {
-	   TimingDelay++;
-	       if(TimingDelay>=current_delay){
-	       	switch(element_switcher)
-	       			{
-	       			case(1):
-	       				{
-	       					execute_message();
-	       				}
-	       			case(2):
-	       				{
-	       					execute_ele_gap();
-	       				}
-	       			}
-	       }
-   }
+  {
+	  TimingDelay++;
+	  if(TimingDelay>=current_delay){
+		  switch(element_switcher){
+		  	  case(1):
+		  			  execute_message();
+		  	  	  	  break;
+		  	  case(2):
+		  			  execute_ele_gap();
+		  	  	  	  break;
+		  }
+
+	  }
+
+  }
+
+
+
+
 
 
   /* USER CODE END SysTick_IRQn 0 */
