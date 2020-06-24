@@ -25,6 +25,7 @@
 #include "main.h"
 #include "stm32f0xx_it.h"
 #include "stm32f0308_discovery.h"
+#define dt 100
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -73,11 +74,11 @@ uint32_t size_of_msg = sizeof(sign_table)/sizeof(sign_table[0]);
 int32_t counter = -1;
 uint32_t TimingDelay = 0;
 uint32_t current_delay = 0;
-uint32_t dot = 100;
-uint32_t dash = 3 * 100;
-uint32_t ele_gap = 100;
-uint32_t sign_gap = 3 * 100;
-uint32_t word_gap = 7 * 100;
+uint32_t dot = dt;
+uint32_t dash = 3 * dt;
+uint32_t ele_gap = dt;
+uint32_t sign_gap = 3 * dt;
+uint32_t word_gap = 7 * dt;
 uint8_t element_switcher = 1;
 /* USER CODE END PV */
 
@@ -120,6 +121,9 @@ void execute_ele_gap()
 	element_switcher = 1;
 	current_delay = current_delay + ele_gap;
 	BSP_LED_Off(LED_GREEN);
+	if(counter>=size_of_msg){
+		send = 0;
+	}
 }
 
 /* USER CODE END 0 */
