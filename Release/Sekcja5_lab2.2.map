@@ -934,9 +934,9 @@ LOAD c:/st/stm32cubeide_1.1.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
                 0x000000002000001c        0x4 Core/Src/stm32f0xx_it.o
                 0x000000002000001c                sign_gap
  .data.sign_table
-                0x0000000020000020       0x3f Core/Src/stm32f0xx_it.o
+                0x0000000020000020       0x3e Core/Src/stm32f0xx_it.o
                 0x0000000020000020                sign_table
- *fill*         0x000000002000005f        0x1 
+ *fill*         0x000000002000005e        0x2 
  .data.size_of_msg
                 0x0000000020000060        0x4 Core/Src/stm32f0xx_it.o
                 0x0000000020000060                size_of_msg
