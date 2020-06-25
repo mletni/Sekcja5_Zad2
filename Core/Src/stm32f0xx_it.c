@@ -25,7 +25,7 @@
 #include "main.h"
 #include "stm32f0xx_it.h"
 #include "stm32f0308_discovery.h"
-#define dt 100
+#define dt 300
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -65,12 +65,11 @@ uint8_t sign_table[] = {
 		1,1,3,			/* i */
 		1,2,3,			/* a */
 		2,3,			/* t */
-		1,2,			/* a */
-		4
+		1,2				/* a */
 };
 uint8_t send = 0;
 uint32_t element = 0;
-uint32_t size_of_msg = sizeof(sign_table)/sizeof(sign_table[0]);
+uint32_t size_of_table = (sizeof(sign_table)/sizeof(sign_table[0]))-1;
 int32_t counter = -1;
 uint32_t TimingDelay = 0;
 uint32_t current_delay = 0;
@@ -126,7 +125,7 @@ void execute_ele_gap()
 	TimingDelay = 0;
 	current_delay = ele_gap;
 	BSP_LED_Off(LED_GREEN);
-	if(counter>=size_of_msg){
+	if(counter>=size_of_table){
 		send = 0;
 	}
 }
@@ -243,7 +242,7 @@ void SysTick_Handler(void)
 void EXTI0_1_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI0_1_IRQn 0 */
-	if(counter>=size_of_msg || counter < 0){
+	if(counter>=size_of_table || counter < 0){
 		current_delay = 0;
 		TimingDelay = 0;
 		counter = -1;
